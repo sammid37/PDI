@@ -1,2 +1,0 @@
-- Amaranthus deflexus
-- Amaranthus spinosus
