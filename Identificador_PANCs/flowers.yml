@@ -1,0 +1,11 @@
+path: C:\Users\saman\OneDrive\Documentos\UFPB\PDI\Identificador_PANCs\dataset
+train: train.txt
+val: validation.txt
+test: <deixa vazio ou adiciona o nome do arquivo de texto com os caminhos para as imagens de validação>
+
+names:
+  0: calendula
+  1: chicory
+  2: daisy
+  3: dandelion
+  4: garlicmustard
