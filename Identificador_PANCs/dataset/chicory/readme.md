@@ -1,6 +1,6 @@
 # 🌿 Cichorium intybus, Common Chicory
 
-![Chicory](Flowers-stems-chicory.webp)
+![Chicory](chicory500.jpg)
 
 A chicória, (Cichorium intybus) é uma planta perene de flor azul da família Asteraceae. Nativa da Europa e introduzida nos Estados Unidos no final do século XIX, a chicória é cultivada extensivamente na Holanda, Bélgica, França e Alemanha e, até certo ponto, na América do Norte.
 
