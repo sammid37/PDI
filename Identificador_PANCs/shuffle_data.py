@@ -53,11 +53,11 @@ for cls in classes:
 
   # Copiar arquivos de imagem para os diretórios apropriados
   for img_file in train_files:
-    shutil.copy(os.path.join(train_files, img_file), os.path.join(train_dir, cls, img_file))
+    shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(train_dir, cls, img_file))
   for img_file in val_files:
-    shutil.copy(os.path.join(val_files, img_file), os.path.join(val_dir, cls, img_file))
+    shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(val_dir, cls, img_file))
   for img_file in test_files:
-    shutil.copy(os.path.join(test_files, img_file), os.path.join(test_dir, cls, img_file))
+    shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(test_dir, cls, img_file))
 
   # Copiar arquivos de anotação para os diretórios apropriados
   for ann_file in ann_files:
