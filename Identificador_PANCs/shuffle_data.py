@@ -17,12 +17,14 @@ test_ratio = 0.15
 
 # Lista de classes (nomes dos diretórios de imagem)
 classes = os.listdir(os.path.join(dataset_root, 'images'))
+print(classes)
 
 # Iterar sobre cada classe
 for cls in classes:
   img_class_dir = os.path.join(dataset_root, 'images', cls)
+  print(img_class_dir)
   ann_class_dir = os.path.join(dataset_root, 'annotations', cls)
-
+  print(ann_class_dir)
   # Listar os arquivos de imagem e anotação
   img_files = os.listdir(img_class_dir)
   ann_files = os.listdir(ann_class_dir)
@@ -43,22 +45,22 @@ for cls in classes:
   train_files = img_files[:num_train]
   val_files = img_files[num_train:num_train + num_val]
   test_files = img_files[num_train + num_val:]
-
+  print(len(train_files), len(val_files), len(test_files))
   # Criar diretórios de treinamento, validação e teste para a classe
   os.makedirs(os.path.join(train_dir, cls), exist_ok=True)
   os.makedirs(os.path.join(val_dir, cls), exist_ok=True)
   os.makedirs(os.path.join(test_dir, cls), exist_ok=True)
 
-  # Mover arquivos de imagem para os diretórios apropriados
+  # Copiar arquivos de imagem para os diretórios apropriados
   for img_file in train_files:
-    shutil.move(os.path.join(img_class_dir, img_file), os.path.join(train_dir, cls, img_file))
+    shutil.copy(os.path.join(train_files, img_file), os.path.join(train_dir, cls, img_file))
   for img_file in val_files:
-    shutil.move(os.path.join(img_class_dir, img_file), os.path.join(val_dir, cls, img_file))
+    shutil.copy(os.path.join(val_files, img_file), os.path.join(val_dir, cls, img_file))
   for img_file in test_files:
-    shutil.move(os.path.join(img_class_dir, img_file), os.path.join(test_dir, cls, img_file))
+    shutil.copy(os.path.join(test_files, img_file), os.path.join(test_dir, cls, img_file))
 
-  # Mover arquivos de anotação para os diretórios apropriados
+  # Copiar arquivos de anotação para os diretórios apropriados
   for ann_file in ann_files:
-    shutil.move(os.path.join(ann_class_dir, ann_file), os.path.join(train_dir, cls, ann_file))
+    shutil.copy(os.path.join(ann_class_dir, ann_file), os.path.join(train_dir, cls, ann_file))
 
 print("Concluído! As imagens e anotações foram divididas em conjuntos de treinamento, validação e teste.")
