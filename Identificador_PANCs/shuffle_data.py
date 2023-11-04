@@ -21,7 +21,7 @@ todo:
 '''
 
 # Diretório raiz do seu dataset
-dataset_root = '/Users/saman/OneDrive/Documentos/UFPB/PDI/Identificador_PANCs/dataset/'
+dataset_root = 'dataset'
 
 # Diretórios de treinamento, validação e teste
 train_dir = os.path.join(dataset_root, 'train')
@@ -29,9 +29,9 @@ val_dir = os.path.join(dataset_root, 'validation')
 test_dir = os.path.join(dataset_root, 'test')
 
 # Taxas de divisão
-train_ratio = 0.8
+train_ratio = 0.9
 test_ratio = 0.1
-val_ratio = 0.1
+val_ratio = 0.01
 
 # Lista de classes (nomes dos diretórios de imagem)
 classes = os.listdir(os.path.join(dataset_root, 'images'))
@@ -60,7 +60,6 @@ for cls in classes:
   num_train = int(total_files * train_ratio)
   # Calcula a taxa de validação 
   # 10% dos 90% de cada classe
-  # val_ratio = int(0.1 * num_train)  
   num_val = int(total_files * val_ratio)
   num_test = int(total_files - num_train - num_val)
   print(num_train, num_val, num_test)
@@ -96,5 +95,5 @@ for cls in classes:
     shutil.copy(os.path.join(ann_class_dir, ann_file), os.path.join(train_dir, cls, ann_file))
 
 with open("data.json", "w") as json_file:
-  json.dump(training_specs, json_file)
+  json.dump(training_specs, json_file, indent=4)
 print("Concluído! As imagens e anotações foram divididas em conjuntos de treinamento, validação e teste.")
