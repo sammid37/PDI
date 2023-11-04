@@ -21,7 +21,7 @@ todo:
 '''
 
 # Diretório raiz do seu dataset
-dataset_root = 'dataset'
+dataset_root = '/Users/saman/OneDrive/Documentos/UFPB/PDI/Identificador_PANCs/dataset/'
 
 # Diretórios de treinamento, validação e teste
 train_dir = os.path.join(dataset_root, 'train')
