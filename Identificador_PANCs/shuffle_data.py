@@ -1,6 +1,7 @@
 import os
 import random
 import shutil
+import json
 
 '''
 todo:
@@ -20,7 +21,7 @@ todo:
 '''
 
 # Diretório raiz do seu dataset
-dataset_root = '/Users/saman/OneDrive/Documentos/UFPB/PDI/Identificador_PANCs/dataset/'
+dataset_root = 'dataset'
 
 # Diretórios de treinamento, validação e teste
 train_dir = os.path.join(dataset_root, 'train')
@@ -28,12 +29,15 @@ val_dir = os.path.join(dataset_root, 'validation')
 test_dir = os.path.join(dataset_root, 'test')
 
 # Taxas de divisão
-train_ratio = 0.9
-test_ratio = 0.10
+train_ratio = 0.8
+test_ratio = 0.1
+val_ratio = 0.1
 
 # Lista de classes (nomes dos diretórios de imagem)
 classes = os.listdir(os.path.join(dataset_root, 'images'))
 print(classes)
+
+training_specs = {}
 
 # Iterar sobre cada classe
 for cls in classes:
@@ -56,10 +60,16 @@ for cls in classes:
   num_train = int(total_files * train_ratio)
   # Calcula a taxa de validação 
   # 10% dos 90% de cada classe
-  val_ratio = int(0.1 * num_train)  
+  # val_ratio = int(0.1 * num_train)  
   num_val = int(total_files * val_ratio)
   num_test = int(total_files - num_train - num_val)
   print(num_train, num_val, num_test)
+
+  class_specs = {}
+  class_specs["training"] = num_train
+  class_specs["validation"] = num_val
+  class_specs["testing"] = num_test
+  training_specs[cls] = class_specs
 
   # Dividir os arquivos em conjuntos de treinamento, validação e teste
   train_files = img_files[:num_train]
@@ -85,4 +95,6 @@ for cls in classes:
   for ann_file in ann_files:
     shutil.copy(os.path.join(ann_class_dir, ann_file), os.path.join(train_dir, cls, ann_file))
 
+with open("data.json", "w") as json_file:
+  json.dump(training_specs, json_file)
 print("Concluído! As imagens e anotações foram divididas em conjuntos de treinamento, validação e teste.")

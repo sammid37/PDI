@@ -1,0 +1,27 @@
+{
+    "chicory": {
+        "training": 400,
+        "validation": 50,
+        "testing": 51
+    },
+    "calendula": {
+        "training": 400,
+        "validation": 50,
+        "testing": 50
+    },
+    "daisy": {
+        "training": 392,
+        "validation": 49,
+        "testing": 49
+    },
+    "garlicmustard": {
+        "training": 327,
+        "validation": 40,
+        "testing": 42
+    },
+    "dandelion": {
+        "training": 400,
+        "validation": 50,
+        "testing": 50
+    }
+}
