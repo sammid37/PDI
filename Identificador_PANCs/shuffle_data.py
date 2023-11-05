@@ -57,14 +57,16 @@ for cls in classes:
 
   # Calcular os tamanhos de cada conjunto
   total_files = len(img_files)
+  total_ann = len(ann_files)
 
-  print(f"Total de arquivos em {cls}: {total_files}")
-  num_train = int(total_files * train_ratio)
-  # Taxa de validação são os 10% dos 90%
-  num_val = int(num_train * val_ratio)
-  num_test = int(total_files * test_ratio)
+  print(f"Total de arquivos em {cls}: {total_files} imagens com {total_ann} anotações")
+  
+  num_train = int(total_ann * train_ratio)
+  num_val = int(num_train * val_ratio) # Taxa de validação são os 10% dos 90%
+  num_test = int(total_ann * test_ratio)
 
   class_specs = {}
+  class_specs["total"] = total_ann
   class_specs["training"] = num_train
   class_specs["validation"] = num_val
   class_specs["testing"] = num_test
@@ -74,7 +76,6 @@ for cls in classes:
   train_files = img_files[:num_train]
   val_files = img_files[num_train:num_train + num_val]
   test_files = img_files[num_train:num_train + num_test]
-  print(cls, num_train, num_test, num_val)
   print(cls, len(train_files), len(test_files), len(val_files),)
 
   # Criar diretórios de treinamento, validação e teste para a classe
@@ -84,35 +85,37 @@ for cls in classes:
   
   # Copia os arquivos de imagem para os diretórios apropriados
   for img_file in train_files:
-    shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(train_dir, cls, img_file))
     img_name, ext = os.path.splitext(img_file)
     ann_file = f"{img_name}.txt"
     ann_src_path = os.path.join(ann_class_dir, ann_file)
+    # Verifica se a anotação da imagem existe, se sim, copia img e .txt
     if os.path.exists(ann_src_path):
+      shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(train_dir, cls, img_file))
       shutil.copy(ann_src_path, os.path.join(train_dir, cls, ann_file))
     else:
       error_log.append(img_file)
      
   for img_file in val_files:
-    shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(val_dir, cls, img_file))
     img_name, ext = os.path.splitext(img_file)
     ann_file = f"{img_name}.txt"
     ann_src_path = os.path.join(ann_class_dir, ann_file)
+    # Verifica se a anotação da imagem existe, se sim, copia img e .txt
     if os.path.exists(ann_src_path):
+      shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(val_dir, cls, img_file))
       shutil.copy(ann_src_path, os.path.join(val_dir, cls, ann_file))
     else:
       error_log.append(img_file)
      
   for img_file in test_files:
-    shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(test_dir, cls, img_file))
     img_name, ext = os.path.splitext(img_file)
     ann_file = f"{img_name}.txt"
     ann_src_path = os.path.join(ann_class_dir, ann_file)
+    # Verifica se a anotação da imagem existe, se sim, copia img e .txt
     if os.path.exists(ann_src_path):
+      shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(test_dir, cls, img_file))
       shutil.copy(ann_src_path, os.path.join(test_dir, cls, ann_file))
     else:
       error_log.append(img_file)  
-      # print(f"Arquivo .txt correspondente à imagem {img_file} não encontrado.")
 
 # Cria um arquivo .json para informar a quantidade de dados para treino, val e testes de cada classe
 with open("data.json", "w") as json_file:
