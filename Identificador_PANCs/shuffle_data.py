@@ -28,10 +28,12 @@ train_dir = os.path.join(dataset_root, 'train')
 val_dir = os.path.join(dataset_root, 'validation')
 test_dir = os.path.join(dataset_root, 'test')
 
+error_log = []
+
 # Taxas de divisão
 train_ratio = 0.9
 test_ratio = 0.1
-val_ratio = 0.01
+val_ratio = 0.1
 
 # Lista de classes (nomes dos diretórios de imagem)
 classes = os.listdir(os.path.join(dataset_root, 'images'))
@@ -58,11 +60,9 @@ for cls in classes:
 
   print(f"Total de arquivos em {cls}: {total_files}")
   num_train = int(total_files * train_ratio)
-  # Calcula a taxa de validação 
-  # 10% dos 90% de cada classe
-  num_val = int(total_files * val_ratio)
-  num_test = int(total_files - num_train - num_val)
-  print(num_train, num_val, num_test)
+  # Taxa de validação são os 10% dos 90%
+  num_val = int(num_train * val_ratio)
+  num_test = int(total_files * test_ratio)
 
   class_specs = {}
   class_specs["training"] = num_train
@@ -73,27 +73,52 @@ for cls in classes:
   # Dividir os arquivos em conjuntos de treinamento, validação e teste
   train_files = img_files[:num_train]
   val_files = img_files[num_train:num_train + num_val]
-  test_files = img_files[num_train + num_val:]
-  print(len(train_files), len(val_files), len(test_files))
+  test_files = img_files[num_train:num_train + num_test]
+  print(cls, num_train, num_test, num_val)
+  print(cls, len(train_files), len(test_files), len(val_files),)
+
   # Criar diretórios de treinamento, validação e teste para a classe
   os.makedirs(os.path.join(train_dir, cls), exist_ok=True)
   os.makedirs(os.path.join(val_dir, cls), exist_ok=True)
   os.makedirs(os.path.join(test_dir, cls), exist_ok=True)
-
-  # Cria um arquivo .txt com as quantidade de 
-
+  
   # Copia os arquivos de imagem para os diretórios apropriados
   for img_file in train_files:
     shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(train_dir, cls, img_file))
+    img_name, ext = os.path.splitext(img_file)
+    ann_file = f"{img_name}.txt"
+    ann_src_path = os.path.join(ann_class_dir, ann_file)
+    if os.path.exists(ann_src_path):
+      shutil.copy(ann_src_path, os.path.join(train_dir, cls, ann_file))
+    else:
+      error_log.append(img_file)
+     
   for img_file in val_files:
     shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(val_dir, cls, img_file))
+    img_name, ext = os.path.splitext(img_file)
+    ann_file = f"{img_name}.txt"
+    ann_src_path = os.path.join(ann_class_dir, ann_file)
+    if os.path.exists(ann_src_path):
+      shutil.copy(ann_src_path, os.path.join(val_dir, cls, ann_file))
+    else:
+      error_log.append(img_file)
+     
   for img_file in test_files:
     shutil.copy(os.path.join(img_class_dir, img_file), os.path.join(test_dir, cls, img_file))
+    img_name, ext = os.path.splitext(img_file)
+    ann_file = f"{img_name}.txt"
+    ann_src_path = os.path.join(ann_class_dir, ann_file)
+    if os.path.exists(ann_src_path):
+      shutil.copy(ann_src_path, os.path.join(test_dir, cls, ann_file))
+    else:
+      error_log.append(img_file)  
+      # print(f"Arquivo .txt correspondente à imagem {img_file} não encontrado.")
 
-  # Copiar arquivos de anotação para os diretórios apropriados
-  for ann_file in ann_files:
-    shutil.copy(os.path.join(ann_class_dir, ann_file), os.path.join(train_dir, cls, ann_file))
-
+# Cria um arquivo .json para informar a quantidade de dados para treino, val e testes de cada classe
 with open("data.json", "w") as json_file:
   json.dump(training_specs, json_file, indent=4)
 print("Concluído! As imagens e anotações foram divididas em conjuntos de treinamento, validação e teste.")
+
+# Exibe a lista de arquivos .txt não encontrados.
+for e in error_log:
+  print(e)

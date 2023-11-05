@@ -1,27 +1,27 @@
 {
-    "chicory": {
-        "training": 450,
-        "validation": 5,
-        "testing": 46
-    },
     "calendula": {
         "training": 450,
-        "validation": 5,
-        "testing": 45
+        "validation": 45,
+        "testing": 50
+    },
+    "chicory": {
+        "training": 450,
+        "validation": 45,
+        "testing": 50
     },
     "daisy": {
         "training": 441,
-        "validation": 4,
-        "testing": 45
-    },
-    "garlicmustard": {
-        "training": 368,
-        "validation": 4,
-        "testing": 37
+        "validation": 44,
+        "testing": 49
     },
     "dandelion": {
         "training": 450,
-        "validation": 5,
-        "testing": 45
+        "validation": 45,
+        "testing": 50
+    },
+    "garlicmustard": {
+        "training": 368,
+        "validation": 36,
+        "testing": 40
     }
 }
