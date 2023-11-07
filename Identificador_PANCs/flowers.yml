@@ -1,11 +1,16 @@
-path: C:\Users\saman\OneDrive\Documentos\UFPB\PDI\Identificador_PANCs\dataset
-train: train.txt
-val: validation.txt
-test: <deixa vazio ou adiciona o nome do arquivo de texto com os caminhos para as imagens de validação>
+path: # /fulldataset
+train: # /fulldataset/train
+val: # /fulldataset/val
+test: # /fulldataset/test
 
-names:
+names: # nomes das classes
   0: calendula
   1: chicory
   2: daisy
   3: dandelion
   4: garlicmustard
+
+augmentation: # informando as formas de data augmentation
+  flip: 1 # 1 indica que deve haver flip horizontal
+  rotate: 30 # Rotação de 30 graus
+  grayscale: 1 # 1 indica que a imagem deve ser convertida para preto e branco
