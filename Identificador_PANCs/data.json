@@ -1,0 +1,32 @@
+{
+    "calendula": {
+        "total": 465,
+        "training": 418,
+        "validation": 41,
+        "testing": 46
+    },
+    "chicory": {
+        "total": 501,
+        "training": 450,
+        "validation": 45,
+        "testing": 50
+    },
+    "daisy": {
+        "total": 490,
+        "training": 441,
+        "validation": 44,
+        "testing": 49
+    },
+    "dandelion": {
+        "total": 500,
+        "training": 450,
+        "validation": 45,
+        "testing": 50
+    },
+    "garlicmustard": {
+        "total": 409,
+        "training": 368,
+        "validation": 36,
+        "testing": 40
+    }
+}
